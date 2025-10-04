@@ -126,6 +126,14 @@ type Payload struct {
 	CustomClaims    map[string]interface{}
 }
 
+func (p *Payload) MaxAge() time.Duration {
+	return p.Expiration.Sub(p.NotBefore)
+}
+
+func (p *Payload) CurrentAge() time.Duration {
+	return time.Until(p.Expiration)
+}
+
 func (p Payload) MarshalJSON() ([]byte, error) {
 	rawClaims := make(map[string]interface{})
 	for k, v := range p.CustomClaims {
