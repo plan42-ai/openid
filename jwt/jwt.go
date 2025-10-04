@@ -130,7 +130,7 @@ func (p *Payload) MaxAge() time.Duration {
 	return p.Expiration.Sub(p.NotBefore)
 }
 
-func (p *Payload) CurrentAge() time.Duration {
+func (p *Payload) TimeUntilExpires() time.Duration {
 	return time.Until(p.Expiration)
 }
 
