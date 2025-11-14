@@ -1,3 +1,4 @@
+//nolint:revive
 package util
 
 func Coalesce[T comparable](values ...T) T {

@@ -123,6 +123,8 @@ type Payload struct {
 	NotBefore       time.Time
 	IssuedAt        time.Time
 	ID              string
+	RunnerID        *string
+	TokenType       *string
 	CustomClaims    map[string]interface{}
 }
 
@@ -182,6 +184,14 @@ func (p Payload) MarshalJSON() ([]byte, error) {
 		rawClaims["iss"] = nil
 	}
 
+	if p.RunnerID != nil {
+		rawClaims["runner_id"] = p.RunnerID
+	}
+
+	if p.TokenType != nil {
+		rawClaims["token_type"] = p.TokenType
+	}
+
 	rawClaims["sub"] = p.Subject
 	rawClaims["aud"] = p.Audience
 	rawClaims["exp"] = p.Expiration.Unix()
@@ -210,6 +220,8 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		HostedDomain    *string `json:"hd,omitempty"`
 		Email           *string `json:"email,omitempty"`
 		EmailVerified   *bool   `json:"email_verified,omitempty"`
+		RunnerID        *string `json:"runner_id,omitempty"`
+		TokenType       *string `json:"token_type,omitempty"`
 	}
 	err := json.Unmarshal(data, &tmp)
 	if err != nil {
@@ -253,6 +265,8 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 	delete(customClaims, "hd")
 	delete(customClaims, "email")
 	delete(customClaims, "email_verified")
+	delete(customClaims, "runner_id")
+	delete(customClaims, "token_type")
 
 	*p = Payload{
 		Issuer:          issuer,
@@ -272,6 +286,8 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		HostedDomain:    tmp.HostedDomain,
 		Email:           tmp.Email,
 		EmailVerified:   tmp.EmailVerified,
+		RunnerID:        tmp.RunnerID,
+		TokenType:       tmp.TokenType,
 	}
 	return nil
 }
