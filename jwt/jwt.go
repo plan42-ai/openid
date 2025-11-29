@@ -124,7 +124,9 @@ type Payload struct {
 	IssuedAt        time.Time
 	ID              string
 	RunnerID        *string
-	TokenType       *string
+	PrincipalType   *string
+	TaskID          *string
+	TurnIndex       *int
 	CustomClaims    map[string]interface{}
 }
 
@@ -188,8 +190,16 @@ func (p Payload) MarshalJSON() ([]byte, error) {
 		rawClaims["runner_id"] = p.RunnerID
 	}
 
-	if p.TokenType != nil {
-		rawClaims["token_type"] = p.TokenType
+	if p.PrincipalType != nil {
+		rawClaims["principal_type"] = p.PrincipalType
+	}
+
+	if p.TaskID != nil {
+		rawClaims["task_id"] = p.TaskID
+	}
+
+	if p.TurnIndex != nil {
+		rawClaims["turn_index"] = p.TurnIndex
 	}
 
 	rawClaims["sub"] = p.Subject
@@ -221,7 +231,9 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		Email           *string `json:"email,omitempty"`
 		EmailVerified   *bool   `json:"email_verified,omitempty"`
 		RunnerID        *string `json:"runner_id,omitempty"`
-		TokenType       *string `json:"token_type,omitempty"`
+		PrincipalType   *string `json:"principal-type,omitempty"`
+		TaskID          *string `json:"task_id,omitempty"`
+		TurnIndex       *int    `json:"turn_index,omitempty"`
 	}
 	err := json.Unmarshal(data, &tmp)
 	if err != nil {
@@ -266,7 +278,9 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 	delete(customClaims, "email")
 	delete(customClaims, "email_verified")
 	delete(customClaims, "runner_id")
-	delete(customClaims, "token_type")
+	delete(customClaims, "principal_type")
+	delete(customClaims, "task_id")
+	delete(customClaims, "turn_index")
 
 	*p = Payload{
 		Issuer:          issuer,
@@ -287,7 +301,9 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		Email:           tmp.Email,
 		EmailVerified:   tmp.EmailVerified,
 		RunnerID:        tmp.RunnerID,
-		TokenType:       tmp.TokenType,
+		PrincipalType:   tmp.PrincipalType,
+		TaskID:          tmp.TaskID,
+		TurnIndex:       tmp.TurnIndex,
 	}
 	return nil
 }
