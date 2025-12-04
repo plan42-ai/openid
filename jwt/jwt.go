@@ -231,7 +231,7 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		Email           *string `json:"email,omitempty"`
 		EmailVerified   *bool   `json:"email_verified,omitempty"`
 		RunnerID        *string `json:"runner_id,omitempty"`
-		PrincipalType   *string `json:"principal-type,omitempty"`
+		PrincipalType   *string `json:"principal_type,omitempty"`
 		TaskID          *string `json:"task_id,omitempty"`
 		TurnIndex       *int    `json:"turn_index,omitempty"`
 	}
