@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/debugging-sucks/openid"
+	"github.com/plan42-ai/openid"
 	"github.com/stretchr/testify/require"
 )
 
@@ -82,41 +82,43 @@ func TestJwkMarshalUnmarshalECC(t *testing.T) {
 	curves := []elliptic.Curve{elliptic.P256(), elliptic.P384(), elliptic.P521()}
 
 	for _, curve := range curves {
-		t.Run(curve.Params().Name, func(t *testing.T) {
-			// Generate ECC key
-			eccKey, err := ecdsa.GenerateKey(curve, rand.Reader)
-			require.NoError(t, err)
+		t.Run(
+			curve.Params().Name, func(t *testing.T) {
+				// Generate ECC key
+				eccKey, err := ecdsa.GenerateKey(curve, rand.Reader)
+				require.NoError(t, err)
 
-			// Create Jwk with ECC key
-			original := openid.Jwk{
-				KeyID:     "test-ecc-key-" + curve.Params().Name,
-				Use:       "sig",
-				Algorithm: "ES256",
-				KeyType:   "EC",
-				ECCKey:    &eccKey.PublicKey,
-			}
+				// Create Jwk with ECC key
+				original := openid.Jwk{
+					KeyID:     "test-ecc-key-" + curve.Params().Name,
+					Use:       "sig",
+					Algorithm: "ES256",
+					KeyType:   "EC",
+					ECCKey:    &eccKey.PublicKey,
+				}
 
-			// Marshal to JSON
-			marshaledJSON, err := json.Marshal(original)
-			require.NoError(t, err)
+				// Marshal to JSON
+				marshaledJSON, err := json.Marshal(original)
+				require.NoError(t, err)
 
-			// Unmarshal back to Jwk
-			var unmarshaled openid.Jwk
-			err = json.Unmarshal(marshaledJSON, &unmarshaled)
-			require.NoError(t, err)
+				// Unmarshal back to Jwk
+				var unmarshaled openid.Jwk
+				err = json.Unmarshal(marshaledJSON, &unmarshaled)
+				require.NoError(t, err)
 
-			// Verify all fields match
-			require.Equal(t, original.KeyID, unmarshaled.KeyID)
-			require.Equal(t, original.Use, unmarshaled.Use)
-			require.Equal(t, original.Algorithm, unmarshaled.Algorithm)
-			require.Equal(t, original.KeyType, unmarshaled.KeyType)
+				// Verify all fields match
+				require.Equal(t, original.KeyID, unmarshaled.KeyID)
+				require.Equal(t, original.Use, unmarshaled.Use)
+				require.Equal(t, original.Algorithm, unmarshaled.Algorithm)
+				require.Equal(t, original.KeyType, unmarshaled.KeyType)
 
-			// Verify ECC key components
-			require.NotNil(t, unmarshaled.ECCKey)
-			require.Equal(t, original.ECCKey.Curve.Params().Name, unmarshaled.ECCKey.Curve.Params().Name)
-			require.Equal(t, original.ECCKey.X.String(), unmarshaled.ECCKey.X.String())
-			require.Equal(t, original.ECCKey.Y.String(), unmarshaled.ECCKey.Y.String())
-		})
+				// Verify ECC key components
+				require.NotNil(t, unmarshaled.ECCKey)
+				require.Equal(t, original.ECCKey.Curve.Params().Name, unmarshaled.ECCKey.Curve.Params().Name)
+				require.Equal(t, original.ECCKey.X.String(), unmarshaled.ECCKey.X.String())
+				require.Equal(t, original.ECCKey.Y.String(), unmarshaled.ECCKey.Y.String())
+			},
+		)
 	}
 }
 

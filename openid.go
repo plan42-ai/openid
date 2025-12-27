@@ -13,7 +13,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/debugging-sucks/openid/internal/util"
+	"github.com/plan42-ai/openid/internal/util"
 )
 
 type Client struct {
@@ -151,41 +151,43 @@ type discoveryDocument struct {
 }
 
 func (d DiscoveryDocument) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&discoveryDocument{
-		Issuer:                                     urlToString(d.Issuer),
-		AuthorizationEndpoint:                      urlToString(d.AuthorizationEndpoint),
-		TokenEndpoint:                              urlToString(d.TokenEndpoint),
-		UserinfoEndpoint:                           urlToString(d.UserinfoEndpoint),
-		JwksURI:                                    urlToString(d.JwksURI),
-		RegistrationEndpoint:                       urlToString(d.RegistrationEndpoint),
-		ScopesSupported:                            d.ScopesSupported,
-		ResponseTypesSupported:                     d.ResponseTypesSupported,
-		ResponseModesSupported:                     d.ResponseModesSupported,
-		GrantTypesSupported:                        d.GrantTypesSupported,
-		AcrValuesSupported:                         d.AcrValuesSupported,
-		SubjectTypesSupported:                      d.SubjectTypesSupported,
-		IDTokenSigningAlgValuesSupported:           d.IDTokenSigningAlgValuesSupported,
-		IDTokenEncryptionAlgValuesSupported:        d.IDTokenEncryptionAlgValuesSupported,
-		IDTokenEncryptionEncValuesSupported:        d.IDTokenEncryptionEncValuesSupported,
-		UserInfoSigningAlgValuesSupported:          d.UserInfoSigningAlgValuesSupported,
-		UserInfoEncryptionAlgValuesSupported:       d.UserInfoEncryptionAlgValuesSupported,
-		UserInfoEncryptionEncValuesSupported:       d.UserInfoEncryptionEncValuesSupported,
-		RequestObjectSigningAlgValuesSupported:     d.RequestObjectSigningAlgValuesSupported,
-		TokenEndpointAuthMethodsSupported:          d.TokenEndpointAuthMethodsSupported,
-		TokenEndpointAuthSigningAlgValuesSupported: d.TokenEndpointAuthSigningAlgValuesSupported,
-		DisplayValuesSupported:                     d.DisplayValuesSupported,
-		ClaimTypesSupported:                        d.ClaimTypesSupported,
-		ClaimsSupported:                            d.ClaimsSupported,
-		ServiceDocumentation:                       urlToString(d.ServiceDocumentation),
-		ClaimsLocalesSupported:                     d.ClaimsLocalesSupported,
-		UILocalesSupported:                         d.UILocalesSupported,
-		ClaimsParameterSupported:                   d.ClaimsParameterSupported,
-		RequestParameterSupported:                  d.RequestParameterSupported,
-		RequestURIParameterSupported:               d.RequestURIParameterSupported,
-		RequireRequestURIRegistration:              d.RequireRequestURIRegistration,
-		OpPolicyURI:                                urlToString(d.OpPolicyURI),
-		OpTosURI:                                   urlToString(d.OpTosURI),
-	})
+	return json.Marshal(
+		&discoveryDocument{
+			Issuer:                                     urlToString(d.Issuer),
+			AuthorizationEndpoint:                      urlToString(d.AuthorizationEndpoint),
+			TokenEndpoint:                              urlToString(d.TokenEndpoint),
+			UserinfoEndpoint:                           urlToString(d.UserinfoEndpoint),
+			JwksURI:                                    urlToString(d.JwksURI),
+			RegistrationEndpoint:                       urlToString(d.RegistrationEndpoint),
+			ScopesSupported:                            d.ScopesSupported,
+			ResponseTypesSupported:                     d.ResponseTypesSupported,
+			ResponseModesSupported:                     d.ResponseModesSupported,
+			GrantTypesSupported:                        d.GrantTypesSupported,
+			AcrValuesSupported:                         d.AcrValuesSupported,
+			SubjectTypesSupported:                      d.SubjectTypesSupported,
+			IDTokenSigningAlgValuesSupported:           d.IDTokenSigningAlgValuesSupported,
+			IDTokenEncryptionAlgValuesSupported:        d.IDTokenEncryptionAlgValuesSupported,
+			IDTokenEncryptionEncValuesSupported:        d.IDTokenEncryptionEncValuesSupported,
+			UserInfoSigningAlgValuesSupported:          d.UserInfoSigningAlgValuesSupported,
+			UserInfoEncryptionAlgValuesSupported:       d.UserInfoEncryptionAlgValuesSupported,
+			UserInfoEncryptionEncValuesSupported:       d.UserInfoEncryptionEncValuesSupported,
+			RequestObjectSigningAlgValuesSupported:     d.RequestObjectSigningAlgValuesSupported,
+			TokenEndpointAuthMethodsSupported:          d.TokenEndpointAuthMethodsSupported,
+			TokenEndpointAuthSigningAlgValuesSupported: d.TokenEndpointAuthSigningAlgValuesSupported,
+			DisplayValuesSupported:                     d.DisplayValuesSupported,
+			ClaimTypesSupported:                        d.ClaimTypesSupported,
+			ClaimsSupported:                            d.ClaimsSupported,
+			ServiceDocumentation:                       urlToString(d.ServiceDocumentation),
+			ClaimsLocalesSupported:                     d.ClaimsLocalesSupported,
+			UILocalesSupported:                         d.UILocalesSupported,
+			ClaimsParameterSupported:                   d.ClaimsParameterSupported,
+			RequestParameterSupported:                  d.RequestParameterSupported,
+			RequestURIParameterSupported:               d.RequestURIParameterSupported,
+			RequireRequestURIRegistration:              d.RequireRequestURIRegistration,
+			OpPolicyURI:                                urlToString(d.OpPolicyURI),
+			OpTosURI:                                   urlToString(d.OpTosURI),
+		},
+	)
 }
 
 func (d *DiscoveryDocument) UnmarshalJSON(data []byte) error {
