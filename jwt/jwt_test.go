@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/debugging-sucks/openid/internal/util"
-	"github.com/debugging-sucks/openid/jwt"
+	"github.com/plan42-ai/openid/internal/util"
+	"github.com/plan42-ai/openid/jwt"
 	"github.com/stretchr/testify/require"
 )
 

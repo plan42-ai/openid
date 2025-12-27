@@ -1,4 +1,4 @@
-module github.com/debugging-sucks/openid
+module github.com/plan42-ai/openid
 
 go 1.24.3
 
