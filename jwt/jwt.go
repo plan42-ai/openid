@@ -127,6 +127,7 @@ type Payload struct {
 	PrincipalType   *string
 	TaskID          *string
 	TurnIndex       *int
+	WorkstreamID    *string
 	CustomClaims    map[string]interface{}
 }
 
@@ -202,6 +203,10 @@ func (p Payload) MarshalJSON() ([]byte, error) {
 		rawClaims["turn_index"] = p.TurnIndex
 	}
 
+	if p.WorkstreamID != nil {
+		rawClaims["workstream_id"] = p.WorkstreamID
+	}
+
 	rawClaims["sub"] = p.Subject
 	rawClaims["aud"] = p.Audience
 	rawClaims["exp"] = p.Expiration.Unix()
@@ -234,6 +239,7 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		PrincipalType   *string `json:"principal_type,omitempty"`
 		TaskID          *string `json:"task_id,omitempty"`
 		TurnIndex       *int    `json:"turn_index,omitempty"`
+		WorkstreamID    *string `json:"workstream_id,omitempty"`
 	}
 	err := json.Unmarshal(data, &tmp)
 	if err != nil {
@@ -281,6 +287,7 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 	delete(customClaims, "principal_type")
 	delete(customClaims, "task_id")
 	delete(customClaims, "turn_index")
+	delete(customClaims, "workstream_id")
 
 	*p = Payload{
 		Issuer:          issuer,
@@ -304,6 +311,7 @@ func (p *Payload) UnmarshalJSON(data []byte) error {
 		PrincipalType:   tmp.PrincipalType,
 		TaskID:          tmp.TaskID,
 		TurnIndex:       tmp.TurnIndex,
+		WorkstreamID:    tmp.WorkstreamID,
 	}
 	return nil
 }
